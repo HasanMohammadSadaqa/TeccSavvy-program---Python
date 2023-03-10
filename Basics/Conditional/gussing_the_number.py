@@ -1,7 +1,6 @@
 import random
 
 num = random.randint(0, 100)
-print(num)
 
 guessed_number = None
 while guessed_number != num:
