@@ -1,0 +1,80 @@
+# # In this task, we'll create a program that allows a teacher to keep track of the grades for their students.
+# # The program will store and manipulate the data
+#
+# def add_new_student(name):
+#     grade_book[name] = {}
+# if __name__ == '__main__':
+#     grade_book = {}
+#     print("test")
+
+
+gradebook = {}
+
+
+def add_student(name):
+    gradebook[name] = {}
+
+
+def add_assignment(assignment):
+    for student in gradebook:
+        gradebook[student][assignment] = None
+
+
+def add_grade(name, assignment, grade):
+    gradebook[name][assignment] = grade
+
+
+def calculate_average(name):
+    grades = gradebook[name].values()
+    return sum(grades) / len(grades)
+
+
+def calculate_class_average():
+    total = 0
+    count = 0
+    for student in gradebook:
+        for grade in gradebook[student].values():
+            if grade is not None:
+                total += grade
+                count += 1
+    return total / count
+
+
+def print_student_report(name):
+    print(f"Grades for {name}:")
+    for assignment, grade in gradebook[name].items():
+        print(f"{assignment}: {grade}")
+
+
+def print_class_report():
+    for student in gradebook:
+        print_student_report(student)
+
+
+while True:
+    command = input(
+        "Enter a command (add student, add assignment, add grade, average grade, student report, class report, quit): ")
+    if command == "add student":
+        name = input("Enter student name: ")
+        add_student(name)
+    elif command == "add assignment":
+        assignment = input("Enter assignment name: ")
+        add_assignment(assignment)
+    elif command == "add grade":
+        name = input("Enter student name: ")
+        assignment = input("Enter assignment name: ")
+        grade = int(input("Enter grade: "))
+        add_grade(name, assignment, grade)
+    elif command == "average grade":
+        name = input("Enter student name: ")
+        average = calculate_average(name)
+        print(f"Average grade for {name}: {average}")
+    elif command == "student report":
+        name = input("Enter student name: ")
+        print_student_report(name)
+    elif command == "class report":
+        print_class_report()
+    elif command == "quit":
+        break
+    else:
+        print("Invalid command.")
