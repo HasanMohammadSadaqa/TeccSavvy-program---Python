@@ -28,7 +28,7 @@ def start():
         if operation_number == 4:
             calculate_total_cost()
         if operation_number == 5:
-            sys.exit("thanks for using this program!")
+            sys.exit("thanks for using our system!")
             # or i can use this two line to exit
             # print("thanks for using this program!")
             # raise SystemExit
@@ -37,6 +37,7 @@ def start():
         print("please enter a number from the list ex: 1")
         print("______________________________________________")
         start()
+
 
 # method to add type
 def adding_item():
@@ -79,6 +80,7 @@ def adding_item():
             print("______________________________________________")
             adding_item()
 
+
 # method to remove type
 def remove_item():
     if len(grocery_lits) == 0:
@@ -89,7 +91,7 @@ def remove_item():
         print(f"Here is your list: \n{grocery_lits}")
         try:
             type_to_remove = int(input("please enter the number of type you want to remove: "))
-            del grocery_lits[type_to_remove] #or grocery_lists.pop(type_to_remove)
+            del grocery_lits[type_to_remove]  # or grocery_lists.pop(type_to_remove)
             if len(grocery_lits) == 0:
                 print("your list is empty now")
                 print("______________________________")
@@ -102,6 +104,7 @@ def remove_item():
             print("please choose a number from a list")
             remove_item()
 
+
 # method to display the current list
 def display_current_list():
     if len(grocery_lits) == 0:
@@ -112,6 +115,7 @@ def display_current_list():
         print(f"Here is the current list: \n{grocery_lits}")
         print("________________________________________")
         start()
+
 
 # method to calculate the total cost of the items
 def calculate_total_cost():

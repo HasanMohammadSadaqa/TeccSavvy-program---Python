@@ -6,6 +6,6 @@ for num in list:
 print(f"the second largest number of the array: {list} is: {max(new_list)}")
 
 # second method (the best)
-# list.sort(reverse=True)
-# second_largest_number = list[1]
-# print(f"the second largest number of the array: {list} is: {second_largest_number}")
+list.sort(reverse=True)
+second_largest_number = list[1]
+print(f"the second largest number of the array: {list} is: {second_largest_number}")
