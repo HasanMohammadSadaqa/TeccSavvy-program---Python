@@ -1,4 +1,4 @@
-list = [1, 2, 3, 6, 4, 15, 98, 100]
+list = list(range(1, 11))
 max_number = list[1]
 for i in list:
     if i > max_number:
