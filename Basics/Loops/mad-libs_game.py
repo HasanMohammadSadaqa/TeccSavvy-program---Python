@@ -1,7 +1,6 @@
 story = "Once upon a time, there was a adjective1 noun who loved to verb in the adjective2 noun2."
 print("Welcome to the Mad Libs Game!\n")
 while True:
-
     print("Please enter the following: ")
     adjective1 = input("-An adjective: ")
     noun1 = input("-A noun: ")
@@ -27,5 +26,7 @@ while True:
         break
     else:
         completed_story = story.replace("adjective1", adjective1).replace("noun", noun1).replace("verb", verb1).replace("adjective2", adjective2).replace("noun2", noun2)
+        print(completed_story)
+        break
 
 
