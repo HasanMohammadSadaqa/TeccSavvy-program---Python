@@ -35,37 +35,27 @@ if __name__ == '__main__':
  I will use the first method and put the second in comment)
 
  """
+
+if __name__ == '__main__':
     # first method
-valid_input = False
-while not valid_input:
-    user_input = input("please enter as list of numbers, separated by commas: ")
-    num_list = user_input.split(",")
-    number_list = []
+    valid_input = False
+    while not valid_input:
+        user_input = input("please enter as list of numbers, separated by commas: ")
+        num_list = user_input.split(",")
+        number_list = []
 
-    if len(num_list) == 0:
-        print("Error: list can not empty")
-    for num in num_list:
-        try:
-            number_list.append(float(num))
+        if len(num_list) == 0:
+            print("Error: list can not empty")
+        for num in num_list:
+            try:
+                number_list.append(float(num))
 
-        except ValueError:
-            print(f"Error: list must contains only numbers")
-            break
-    else:
-        valid_input = True
-print(f"the sum of the numbers is: {summation(number_list)}")
-print(f"the mean of the numbers is: {mean(number_list)}")
-print(f"the standard deviation of the numbers is: {standard_deviation(number_list)}")
+            except ValueError:
+                print(f"Error: list must contains only numbers")
+                break
+        else:
+            valid_input = True
+    print(f"the sum of the numbers is: {summation(number_list)}")
+    print(f"the mean of the numbers is: {mean(number_list)}")
+    print(f"the standard deviation of the numbers is: {standard_deviation(number_list)}")
 
-
-
-#     second method for input validation of a list (using built-in functions):
-# while True:
-#     user_input = input("Enter a list of numbers, separated by commas: ")
-#     num_list = list(map(float, user_input.split(",")))
-#     if len(num_list) == 0:
-#         print("Error: list can not be empty")
-#     elif not all(isinstance(num, (int, float)) for num in num_list):
-#         print("Error: list must contain only numbers")
-#     else:
-#         break
