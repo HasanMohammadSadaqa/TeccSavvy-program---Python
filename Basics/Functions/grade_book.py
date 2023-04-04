@@ -109,11 +109,13 @@ def add_grade(grade, student_name, assignment_name):
 
 
 def average_grade_for_specific_student(student_name):
-    new_grades = []
-    for grade in grade_book[student_name]:
-        new_grade = float(grade)
-        new_grades.append(new_grade)
-    average = sum(new_grades) / len(grade_book[student_name])
+    # new_grades = []
+    # for grade in grade_book[student_name]:
+    #     new_grade = float(grade)
+    #     new_grades.append(new_grade)
+    # average = sum(new_grades) / len(grade_book[student_name])
+    # return average
+    average = sum(grade_book[student_name]) / len(grade_book[student_name])
     return average
 
 
