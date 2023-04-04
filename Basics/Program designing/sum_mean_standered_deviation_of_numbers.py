@@ -30,13 +30,6 @@ def standard_deviation(numbers):
 
 
 if __name__ == '__main__':
-    """
- first of all prompts the user to enter a list of numbers (there is two methods to do this
- I will use the first method and put the second in comment)
-
- """
-
-if __name__ == '__main__':
     # first method
     valid_input = False
     while not valid_input:
@@ -58,4 +51,3 @@ if __name__ == '__main__':
     print(f"the sum of the numbers is: {summation(number_list)}")
     print(f"the mean of the numbers is: {mean(number_list)}")
     print(f"the standard deviation of the numbers is: {standard_deviation(number_list)}")
-
