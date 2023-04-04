@@ -8,6 +8,5 @@ def summation_of_numbers(nums):
 
 
 if __name__ == '__main__':
-    # Define the input list
     numbers = [1, 2, 3, 4, 5]
     print(f"The total is: {summation_of_numbers(numbers)}")
