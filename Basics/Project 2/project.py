@@ -8,11 +8,10 @@ def start():
     :return: operation list that represent the functionality of this project and manipulate them
     """
     operations = {
-        1: "Load Playlist",
-        2: "View Playlist",
-        3: "Search Playlist",
-        4: "Analyze Playlist",
-        5: "Exit"
+        1: "View Playlist",
+        2: "Search Playlist",
+        3: "Analyze Playlist",
+        4: "Exit"
     }
     print("__________________operation list______________________")
     for operation in operations.items():
@@ -22,37 +21,40 @@ def start():
         operation_number = int(input("Select operation number from the list: "))
         if operation_number < 1 or operation_number > 5:
             print("Invalid input: please select a number from the list")
-        if operation_number == 2:
+            start()
+        if operation_number == 1:
+            print("Playlist is: ")
             view_playlist()
-        # if operation_number == 3:
-        #     convert_duration()
-        if operation_number == 3:
-            song_gener = input("Enter song's gener: ")
-            song_year = input("Enter song's year: ")
-            # validation for inputs
-            inputs_errors = []
-            if not song_gener.isalpha():
-                inputs_errors.append("Gener must letters only")
-            if not song_year.isdigit():
-                inputs_errors.append("Year must be only number")
-            while len(inputs_errors) > 0:
-                for error in inputs_errors:
-                    print(error)
-            else:
-                for song in search_song(song_gener, song_year):
-                    print(
-                        f"{search_song(song_gener, song_year).index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {song['duration']} sec")
-
+            start()
+        if operation_number == 2:
+            search_list()
+    #     if operation_number == 3:
+    #         song_gener = input("Enter song's gener: ")
+    #         song_year = input("Enter song's year: ")
+    #         # validation for inputs
+    #         inputs_errors = []
+    #         if not song_gener.isalpha():
+    #             inputs_errors.append("Gener must letters only")
+    #         if not song_year.isdigit():
+    #             inputs_errors.append("Year must be only number")
+    #         while len(inputs_errors) > 0:
+    #             for error in inputs_errors:
+    #                 print(error)
+    #         else:
+    #             for song in search_song(song_gener, song_year):
+    #                 print(
+    #                     f"{search_song(song_gener, song_year).index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {song['duration']} sec")
+    #                 start()
+    #
     except ValueError:
         print("please enter a number from the list ex: 1")
         start()
 
 
-def convert_duration():
-    for song in song_data:
-        duration_in_min = int(song["duration"] / 60)
-        reminder_duration_in_sec = song["duration"] % 60
-        print(f'song duration for {song["title"]} is: {duration_in_min} min, {reminder_duration_in_sec} sec')
+def convert_duration(song):
+    duration_in_min = int(song["duration"] / 60)
+    reminder_duration_in_sec = song["duration"] % 60
+    return duration_in_min, reminder_duration_in_sec
 
 
 def view_playlist():
@@ -64,18 +66,89 @@ def view_playlist():
             f"{song_data.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {song['duration']}")
 
 
-def search_song(gener, year):
-    """
+def search_list():
+    search_about_list = {
+        1: "According to specific artist",
+        2: "According to genre",
+        3: "According to specific year",
+        4: "Go back"
+    }
+    for option in search_about_list.items():
+        print(f"{option[0]}) {option[1]}")
+    try:
+        option_selected = int(input("Please Select favorite search: "))
+        if option_selected < 1 or option_selected > 4:
+            print("Please select number from options list")
+            print("___________________________")
+            search_list()
+        if option_selected == 1:
+            name = input("Please enter artist name: ")
+            search_song_according_artist(name)
+        if option_selected == 2:
+            genre = input("Please enter genre: ")
+            search_song_according_genre(genre)
+        if option_selected == 3:
+            year = input("Enter the year: ")
+            search_song_according_year(year)
+        if option_selected == 4:
+            start()
 
-    :param gener: (string) the gener of song the user search about
-    :param year: (int) the year of song the user search about
-    :return: (list) list of songs that gener and year matches the inputs gener and years
+
+    except ValueError:
+        print("Please select number from options list")
+        print("______________________________")
+        search_list()
+
+
+def search_song_according_artist(artist_name):
+    artist_songs = []
+    for artist_song in song_data:
+        if artist_song["artist"] == artist_name:
+            artist_songs.append(artist_song)
+    for song in artist_songs:
+        print(
+            f"{artist_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
+        )
+
+
+def search_song_according_genre(genre):
+    genre_songs = []
+    for genre_song in song_data:
+        if genre_song["genre"] == genre:
+            genre_songs.append(genre)
+    for song in genre_songs:
+        print(
+            f"{genre_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
+        )
+
+
+def search_song_according_year(year):
+    year_songs = []
+    for year_song in song_data:
+        if str(year_song["year"]) == year:
+            year_songs.append(year_song)
+    for song in year_songs:
+        print(
+            f"{year_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
+        )
+
+
+def average_duration(artist_name):
     """
-    song_list = []
+    :param artist_name: artist name that we want to compute his song duration
+    :return: average of artist's song
+    """
+    artist_songs = []
     for song in song_data:
-        if song["genre"] == gener and str(song["year"]) == year:
-            song_list.append(song)
-    return song_list
+        if song["artist"] == song_data:
+            artist_songs.append(song)
+        else:
+            print("Artist is not in the playlist")
+    summation_of_duration = 0
+    for song in artist_songs:
+        summation_of_duration += song["duration"]
+        average = summation_of_duration / len(artist_songs)
+    return average
 
 
 if __name__ == '__main__':
