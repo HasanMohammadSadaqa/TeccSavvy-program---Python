@@ -1,6 +1,7 @@
 """The project is a music data analysis tool that loads a set of music data and provides functionality to filter and
 analyze the data. The data is stored in a list of dictionaries, with each dictionary representing a single song and
 containing fields such as the artist, title, genre, year, and duration."""
+import sys
 
 
 def start():
@@ -28,30 +29,26 @@ def start():
             start()
         if operation_number == 2:
             search_list()
-    #     if operation_number == 3:
-    #         song_gener = input("Enter song's gener: ")
-    #         song_year = input("Enter song's year: ")
-    #         # validation for inputs
-    #         inputs_errors = []
-    #         if not song_gener.isalpha():
-    #             inputs_errors.append("Gener must letters only")
-    #         if not song_year.isdigit():
-    #             inputs_errors.append("Year must be only number")
-    #         while len(inputs_errors) > 0:
-    #             for error in inputs_errors:
-    #                 print(error)
-    #         else:
-    #             for song in search_song(song_gener, song_year):
-    #                 print(
-    #                     f"{search_song(song_gener, song_year).index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {song['duration']} sec")
-    #                 start()
-    #
+        if operation_number == 3:
+            print(f"Total number of songs: {len(song_data)}")
+            print(f"Total playlist length(Seconds): {average_duration()[0]} sec")
+            print(f"Average song length (Seconds): {average_duration()[1]} sec")
+            print(f"Oldest song: {' - '.join(str(value) for value in updated_year()[0])}")
+            print(f"Newest song: {' - '.join(str(value) for value in updated_year()[1])}")
+            print(f"Most common artist: {most_common_artist()}")
+            start()
+        if operation_number == 4:
+            sys.exit("Thanks for using our system")
     except ValueError:
         print("please enter a number from the list ex: 1")
         start()
 
 
 def convert_duration(song):
+    """
+    :param song: specific song to find it's duration in min and sec
+    :return: duration in min and sec
+    """
     duration_in_min = int(song["duration"] / 60)
     reminder_duration_in_sec = song["duration"] % 60
     return duration_in_min, reminder_duration_in_sec
@@ -67,12 +64,16 @@ def view_playlist():
 
 
 def search_list():
+    """
+    :return: list of operation in search, each one execute a specific function
+    """
     search_about_list = {
         1: "According to specific artist",
         2: "According to genre",
         3: "According to specific year",
         4: "Go back"
     }
+    print("You can search: ")
     for option in search_about_list.items():
         print(f"{option[0]}) {option[1]}")
     try:
@@ -84,12 +85,15 @@ def search_list():
         if option_selected == 1:
             name = input("Please enter artist name: ")
             search_song_according_artist(name)
+            start()
         if option_selected == 2:
             genre = input("Please enter genre: ")
             search_song_according_genre(genre)
+            start()
         if option_selected == 3:
             year = input("Enter the year: ")
             search_song_according_year(year)
+            start()
         if option_selected == 4:
             start()
 
@@ -101,6 +105,10 @@ def search_list():
 
 
 def search_song_according_artist(artist_name):
+    """
+    :param artist_name: artist name that we want search according it
+    :return: list of songs which the artist equal to artist name input
+    """
     artist_songs = []
     for artist_song in song_data:
         if artist_song["artist"] == artist_name:
@@ -109,17 +117,23 @@ def search_song_according_artist(artist_name):
         print(
             f"{artist_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
         )
+    else:
+        print("Artist not in the playlist")
+        start()
 
 
 def search_song_according_genre(genre):
     genre_songs = []
     for genre_song in song_data:
         if genre_song["genre"] == genre:
-            genre_songs.append(genre)
+            genre_songs.append(genre_song)
     for song in genre_songs:
         print(
             f"{genre_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
         )
+    else:
+        print("No genre in playlist matches the input")
+        start()
 
 
 def search_song_according_year(year):
@@ -131,27 +145,41 @@ def search_song_according_year(year):
         print(
             f"{year_songs.index(song) + 1}) {song['title']} - {song['artist']} - {song['genre']} - {song['year']} - {convert_duration(song)[0]} min, {convert_duration(song)[1]} Sec"
         )
+    else:
+        print("No song in playlist with that year")
 
 
-def average_duration(artist_name):
+def average_duration():
     """
-    :param artist_name: artist name that we want to compute his song duration
-    :return: average of artist's song
+    :return: average of song's duration
     """
-    artist_songs = []
-    for song in song_data:
-        if song["artist"] == song_data:
-            artist_songs.append(song)
-        else:
-            print("Artist is not in the playlist")
     summation_of_duration = 0
-    for song in artist_songs:
+    for song in song_data:
         summation_of_duration += song["duration"]
-        average = summation_of_duration / len(artist_songs)
-    return average
+        average = summation_of_duration / len(song_data)
+    return summation_of_duration, average
+
+
+def updated_year():
+    sorted_songs = sorted(song_data, key=lambda k: k["year"])
+    return sorted_songs[0].values(), sorted_songs[-1].values()
+
+
+def most_common_artist():
+    count_artists = {}
+    for song in song_data:
+        if song["artist"] in count_artists:
+            count_artists[song["artist"]] += 1
+        else:
+            count_artists[song["artist"]] = 1
+    max_artist = max(count_artists.values())
+    for artist, repetition in count_artists.items():
+        if repetition == max_artist:
+            return artist
 
 
 if __name__ == '__main__':
+    # list of dictionaries od songs
     song_data = [
         {"title": "Bohemian Rhapsody", "artist": "Queen", "genre": "Rock", "year": 1975, "duration": 355},
         {"title": "Stairway to Heaven", "artist": "Led Zeppelin", "genre": "Rock", "year": 1971, "duration": 482},
