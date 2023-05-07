@@ -101,7 +101,7 @@ class Bank:
             print("No accounts yet!")
             print("__________________________")
 
-    def search_account(self, account_number):
+    def search_account(self, account_number) :
         for account in self.__accounts:
             if account.get_account_number() == account_number:
                 print(f"Account number: {account.get_account_number()}")
