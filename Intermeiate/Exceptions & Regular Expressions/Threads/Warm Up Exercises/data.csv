@@ -1,0 +1,16 @@
+import csv
+
+filename = 'data.csv'
+data = [
+    ['Alice', '25', '5000.00'],
+    ['Bob', '30', '4500.00'],
+    ['Charlie', '35', '8000.50'],
+    ['Dave', '40', '900000.00']
+]
+
+with open(filename, 'w', newline='') as file:
+    csv_writer = csv.writer(file)
+    csv_writer.writerow(['Name', 'Age', 'Salary'])  # Write the header row
+    csv_writer.writerows(data)  # Write the data rows
+
+print(f"CSV file '{filename}' has been created with the provided data.")
